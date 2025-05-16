@@ -1,52 +1,28 @@
 import React, { useEffect } from "react"
-import rigoImageUrl from "../assets/img/rigo-baby.jpg";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+import { Link } from "react-router-dom";
 
 export const Home = () => {
 
 	const { store, dispatch } = useGlobalReducer()
 
-	const loadMessage = async () => {
-		try {
-			const backendUrl = import.meta.env.VITE_BACKEND_URL
-
-			if (!backendUrl) throw new Error("VITE_BACKEND_URL is not defined in .env file")
-
-			const response = await fetch(backendUrl + "/api/hello")
-			const data = await response.json()
-
-			if (response.ok) dispatch({ type: "set_hello", payload: data.message })
-
-			return data
-
-		} catch (error) {
-			if (error.message) throw new Error(
-				`Could not fetch the message from the backend.
-				Please check if the backend is running and the backend port is public.`
-			);
-		}
-
+	const handleLogout = () => {
+		
 	}
 
-	useEffect(() => {
-		loadMessage()
-	}, [])
-
 	return (
-		<div className="text-center mt-5">
-			<h1 className="display-4">Hello Rigo!!</h1>
-			<p className="lead">
-				<img src={rigoImageUrl} className="img-fluid rounded-circle mb-3" alt="Rigo Baby" />
-			</p>
-			<div className="alert alert-info">
-				{store.message ? (
-					<span>{store.message}</span>
-				) : (
-					<span className="text-danger">
-						Loading message from the backend (make sure your python 🐍 backend is running)...
-					</span>
-				)}
+		<div className="text-center mt-5 Content container">
+			<h1 className="my-5">Welcome to the project about JWT Authentication</h1>
+			{!store.token ?
+			<div>
+				<h3>Currently, you are not logged in and have no valid token.</h3>
+				<h3>Go to the <Link to="/login">login</Link> page in order to enter your account or create a new one</h3>
 			</div>
+			: <div>
+				<h3>You have logged in as {store.email}</h3>
+				<h3>You can now enter the <Link to="/private">private section</Link> or <a onClick={handleLogout}>logout</a></h3>
+			</div>
+			}
 		</div>
-	);
-}; 
+	)
+}
