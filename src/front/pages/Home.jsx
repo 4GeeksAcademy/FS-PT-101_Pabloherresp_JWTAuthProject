@@ -7,11 +7,12 @@ export const Home = () => {
 	const { store, dispatch } = useGlobalReducer()
 
 	const handleLogout = () => {
-		
+		dispatch({type: "logoutUser"})
+		navigate("/")
 	}
 
 	return (
-		<div className="text-center mt-5 Content container">
+		<div className="text-center mt-5 container">
 			<h1 className="my-5">Welcome to the project about JWT Authentication</h1>
 			{!store.token ?
 			<div>
@@ -20,7 +21,7 @@ export const Home = () => {
 			</div>
 			: <div>
 				<h3>You have logged in as {store.email}</h3>
-				<h3>You can now enter the <Link to="/private">private section</Link> or <a onClick={handleLogout}>logout</a></h3>
+				<h3>You can now enter the <Link to="/private">private section</Link> or <a href="#" onClick={handleLogout}>logout</a></h3>
 			</div>
 			}
 		</div>

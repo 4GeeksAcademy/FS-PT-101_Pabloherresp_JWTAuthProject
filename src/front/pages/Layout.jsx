@@ -11,8 +11,9 @@ export const Layout = () => {
 
     useEffect(()=>{
         let token = localStorage.getItem("token")
+        let email = localStorage.getItem("email")
         if(token)
-            dispatch(store,{type: "loadToken", payload: token})
+            dispatch({type: "loadUser", payload: {token: token, email: email}})
     },[])
     return (
         <ScrollToTop>
