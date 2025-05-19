@@ -29,7 +29,6 @@ def signup():
     except IntegrityError:
         return jsonify({"error":"User already created"}), 401
     except Exception:
-        print("Error desconocido")
         return jsonify({"error":"Unknown error"}), 400
 
     response_body = {
@@ -63,5 +62,5 @@ def getUsers():
     if not users:
         return jsonify({"error": "No users yet"}), 404
     else:
-        response = [i.email for i in users]
+        response = [i.serialize() for i in users]
         return response, 200
